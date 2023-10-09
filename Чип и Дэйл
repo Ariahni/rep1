@@ -1,0 +1,22 @@
+import wave
+import struct
+
+source = wave.open("in.wav", 'rb')
+dest = wave.open("out.wav", 'wb')
+
+num_of_channels = source.getnchannels()
+samp_width = source.getsampwidth()
+frame_rate = source.getframerate()
+num_of_frames = source.getnframes()
+
+dest.setnchannels(num_of_channels)
+dest.setsampwidth(samp_width)
+dest.setframerate(frame_rate * 2)
+dest.setnframes(num_of_frames // 2)
+
+for _ in range(num_of_frames // 2):
+    frame = source.readframes(2)
+    dest.writeframes(frame)
+
+source.close()
+dest.close()
