@@ -1,0 +1,29 @@
+import wave
+import struct
+
+volume_change = float(input())
+source = wave.open("in.wav", 'rb')
+dest = wave.open("out.wav", 'wb')
+
+num_of_channels = source.getnchannels()
+samp_width = source.getsampwidth()
+frame_rate = source.getframerate()
+num_of_frames = source.getnframes()
+
+dest.setnchannels(num_of_channels)
+dest.setsampwidth(samp_width)
+dest.setframerate(frame_rate)
+dest.setnframes(num_of_frames)
+
+amplmin = -32768
+amplmax = 32767
+
+for _ in range(num_of_frames):
+    frame = source.readframes(1)
+    unpacked_frame = struct.unpack("<h", frame)
+    amplnew = int(unpacked_frame[0] * volume_change)
+    amplnew = max(amplmin, min(amplmax, amplnew))
+    new_frame = struct.pack("<h", amplnew)
+    dest.writeframes(new_frame)
+source.close()
+dest.close()
