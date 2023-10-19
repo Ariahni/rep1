@@ -1,0 +1,12 @@
+import matplotlib.pyplot as plt
+import random
+x=["Arc.M","Im Dr","Stray Kids","Enh","The Score"
+,"PAtD","BTS"]
+ls =[i for i in range(150,500)]
+counts=[random.choice(ls),random.choice(ls),random.choice(ls),random.choice(ls)
+,random.choice(ls),random.choice(ls),random.choice(ls)]
+plt.bar(x,counts)
+plt.title("Bands")
+plt.xlabel("bands")
+plt.ylabel("fans")
+plt.show()
